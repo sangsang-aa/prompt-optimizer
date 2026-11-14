@@ -4,6 +4,48 @@
 
 ---
 
+## 2026-11-14（Phase 0：API 打通尝试）
+
+**做了什么**
+
+- 依据官方文档确认了火山方舟视频生成接口：
+  - `POST https://ark.cn-beijing.volces.com/api/v3/contents/generations/tasks`
+  - body：`model` + `content[]`（`text` / `image_url`）+ `resolution` / `ratio` / `duration` / `generate_audio` / `watermark`
+  - 查询：`GET /api/v3/contents/generations/tasks/{id}` → `status: queued|running|succeeded|failed|expired`，成功给 `content.video_url`
+- 写了 `scripts/video-phase0-check.mjs`（无依赖，key 只从环境或 `.env.local` 读）。
+
+**Seedance 2.0 Fast 的能力位（以官方文档为准）**
+
+| 参数 | 2.0 Fast | 结论 |
+| --- | --- | --- |
+| `resolution` | 480p / 720p | 无 1080p、无 4k |
+| `ratio` | 16:9 / 4:3 / 1:1 / 3:4 / 9:16 / 21:9 / adaptive | 支持 3:4 |
+| `duration` | `[4, 15]` 或 `-1` | 最短 4s |
+| `generate_audio` | 默认 `true` | 无声必须显式传 `false` |
+| `watermark` | 默认 `false` | 与客户端“豆包AI生成”不同 |
+| `seed` | **不支持**（仅 1.0 系列） | UI 要禁用 |
+| `camera_fixed` | **不支持**（仅 1.0 系列） | 不能承诺锁机位 |
+| `frames` | **不支持**（仅 1.0 系列） | 只能用整数秒 |
+| `first_frame` / `last_frame` | 支持（`role` 字段） | 图生首尾帧可用 |
+| `reference_image` | 支持（1～9 张） | 多图参考可用 |
+
+**结果：401，key 被拒**
+
+```
+AuthenticationError: The API key format is incorrect.
+```
+
+当前 `.env.local` 里是 `<redacted>`，不是方舟 API Key 的格式
+（方舟 Key 是 UUID 形式）。网络与端点都通，纯鉴权问题。
+
+**下一步**
+
+- 换成方舟控制台「API Key 管理」里生成的真实 Key，写进 `.env.local`：
+  `ARK_API_KEY=<key>`（该文件已 gitignore）。
+- 重跑：`node scripts/video-phase0-check.mjs --ratio 3:4 --resolution 480p --duration 4 --out <tmp>/first.mp4 --json <tmp>/first.json`
+
+---
+
 ## 2026-11-14（第二步：环境基线）
 
 **做了什么**
