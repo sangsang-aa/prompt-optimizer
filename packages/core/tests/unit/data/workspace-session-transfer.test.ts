@@ -22,7 +22,7 @@ const snapshotFor = (mode: LegacySessionSubModeKey) => mode === 'arena' ? arena 
   ...(mode === 'pro-multi' ? {
     conversationMessagesSnapshot: [{ id: 'message-1', role: 'user', content: '原始消息', originalContent: '原始消息' }],
     selectedMessageId: 'message-1', messageChainMap: { 'message-1': 'chain-1' },
-  } : mode.startsWith('image-') ? { originalPrompt: '画一朵花' } : { prompt: '你是科学老师', testContent: '为什么冰会浮起来？' }),
+  } : mode.startsWith('image-') || mode === 'video-create' ? { originalPrompt: '画一朵花' } : { prompt: '你是科学老师', testContent: '为什么冰会浮起来？' }),
   optimizedPrompt: '优化后的工作区草稿\n不要丢失最后一行', reasoning: '思考过程',
   chainId: 'chain-1', versionId: 'version-2',
   temporaryVariables: { subject: '冰块', details: '第一行\n第二行' },
@@ -71,7 +71,7 @@ describe('Workspace session transfer in unified backups', () => {
     const source = createDataManager(new PreferenceService(storage))
     const exported = JSON.parse(await source.manager.exportAllData())
     expect(exported.data.workspaceSessions.version).toBe(1)
-    expect(Object.keys(exported.data.workspaceSessions.sessions)).toHaveLength(8)
+    expect(Object.keys(exported.data.workspaceSessions.sessions)).toHaveLength(9)
     expect(exported.data.userSettings).toEqual({ 'app:settings:ui:theme-id': 'dark' })
 
     const destination = new PreferenceService(new MemoryStorageProvider())

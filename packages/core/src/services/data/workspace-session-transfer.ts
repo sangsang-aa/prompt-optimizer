@@ -93,7 +93,7 @@ function assertSnapshot(mode: LegacySessionSubModeKey, value: unknown): asserts 
         ['system', 'user', 'assistant', 'tool'].includes(message.role))) {
       invalid(`${mode}.conversationMessagesSnapshot is invalid`)
     }
-  } else if (typeof snapshot[mode.startsWith('image-') ? 'originalPrompt' : 'prompt'] !== 'string') {
+  } else if (typeof snapshot[mode.startsWith('image-') || mode === 'video-create' ? 'originalPrompt' : 'prompt'] !== 'string') {
     invalid(`${mode} original prompt is missing`)
   }
   for (const key of stringRecordFields) {

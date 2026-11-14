@@ -4,6 +4,47 @@
 
 ---
 
+## 2026-11-14（Phase 1：视频模式骨架）
+
+**做了什么**
+
+- 新增一级模式 `video`：`FunctionMode` / `PromptModeKey`（`video-create`）/ `PromptModeFamily` /
+  `LEGACY_SESSION_SUB_MODE_KEYS` / 偏好白名单全部补齐。
+- 路由新增 `/video/create`，导航栏加「视频」按钮，子模式表与守卫同步。
+- 新增 `useVideoCreateSession`（`session/v1/video-create`）：只存要求文本、优化结果占位、
+  文本模型与模板选择，遵循“视频字节不进存储”。
+- 新增空壳 `VideoWorkspace.vue`（要求输入 + 结果占位 + 禁用的「生成视频」）与三语 `video` 命名空间。
+- 明细与差异清单见 [phase-1-skeleton.md](./phase-1-skeleton.md)。
+
+**发现并修复一个会话持久化坑**
+
+- 现象：视频草稿在 30s 自动保存后仍报
+  `Session changed in another window; the local draft was retained`，刷新后丢失；
+  基础模式同一流程正常。
+- 原因：新 store 调 `readSessionSnapshot(key, createDefaultState())` 把“默认值”写成了 CAS 基线。
+  IndexedDB 里该 key 还不存在（实际值 `null`），首次保存 `compareAndSet(expected=默认值)` 必然失败，
+  被误判为跨窗口冲突。
+- 修复：与文本会话一致，restore 的 fallback 用 `null`，只有读到快照时才覆盖内存状态。
+- 回归测试：`packages/ui/tests/unit/stores/session/video-create-session.spec.ts`
+  （首次保存无冲突 + 新窗口恢复草稿）。
+
+**验证**
+
+| 检查 | 结果 |
+| --- | --- |
+| `pnpm typecheck:core` / `typecheck:ui` | ✅ |
+| `pnpm -F core test` | ✅ 1488 passed / 152 skipped |
+| `pnpm -F ui test` | ✅ 1779 passed |
+| `pnpm check:locale` / `check:no-chinese-runtime` | ✅ |
+| 手工（Edge + Playwright）：进 `/video/create`、草稿跨刷新恢复、切模式不串、`/video/foo` 重定向、`/image/text2image` 正常、360px 无横向溢出 | ✅ 全过，无页面报错 |
+
+**下一步**
+
+- Phase 1 第二切片：结构化视频提示词编译器（`structured` / `compact` / `auto`）。
+- 生成前确认费用、参考图上传与任务轮询留到 Phase 2。
+
+---
+
 ## 2026-11-14（Phase 0：API 打通）
 
 **做了什么**

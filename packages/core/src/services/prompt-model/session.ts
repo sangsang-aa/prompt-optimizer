@@ -29,6 +29,7 @@ export const LEGACY_SESSION_SUB_MODE_KEYS = [
   'image-text2image',
   'image-image2image',
   'image-multiimage',
+  'video-create',
 ] as const;
 
 export type LegacySessionSubModeKey = typeof LEGACY_SESSION_SUB_MODE_KEYS[number];
@@ -135,6 +136,8 @@ export const legacySessionSubModeKeyToPromptModeKey = (
       return 'image-image2image';
     case 'image-multiimage':
       return 'image-multiimage';
+    case 'video-create':
+      return 'video-create';
     case 'basic-system':
     default:
       return 'basic-system';

@@ -503,6 +503,7 @@ const getWorkspacePathFromGlobalSettings = () => {
   const globalSettings = useGlobalSettings()
   const { functionMode, basicSubMode, proSubMode, imageSubMode } = globalSettings.state
   if (functionMode === 'arena') return '/arena'
+  if (functionMode === 'video') return '/video/create'
   if (functionMode === 'image') return normalizeWorkspacePath(`/image/${imageSubMode}`)
   if (functionMode === 'pro') return normalizeWorkspacePath(`/pro/${proSubMode}`)
   return normalizeWorkspacePath(`/basic/${basicSubMode}`)
@@ -559,6 +560,8 @@ const parseRouteInfo = (path = activeWorkspaceContextPath.value) => {
       (functionMode === 'pro' ? subMode : 'variable') as 'multi' | 'variable',
     imageSubMode:
       (functionMode === 'image' ? subMode : 'text2image') as 'text2image' | 'image2image' | 'multiimage',
+    videoSubMode:
+      (functionMode === 'video' ? subMode : 'create') as 'create',
     isValid: true,
     canonicalPath: workspaceRoute.path,
   }
@@ -569,6 +572,7 @@ const routeFunctionMode = computed<FunctionMode>(() => parseRouteInfo().function
 const routeBasicSubMode = computed<BasicSubMode>(() => parseRouteInfo().basicSubMode)
 const routeProSubMode = computed<ProSubMode>(() => parseRouteInfo().proSubMode)
 const routeImageSubMode = computed<ImageSubMode>(() => parseRouteInfo().imageSubMode)
+const routeVideoSubMode = computed<'create'>(() => parseRouteInfo().videoSubMode)
 
 // ========== GlobalSettings 初始化 Gate（避免 restore 前渲染/纠错） ==========
 // 目的：确保 PreferenceService 注入后先 restoreGlobalSettings，再允许 UI 渲染/执行部分 watch
@@ -628,6 +632,7 @@ sessionManager.injectSubModeReaders({
   getBasicSubMode: () => routeBasicSubMode.value,
   getProSubMode: () => routeProSubMode.value,
   getImageSubMode: () => routeImageSubMode.value,
+  getVideoSubMode: () => routeVideoSubMode.value,
 });
 
 // 5. Initialize i18n with storage when services are ready

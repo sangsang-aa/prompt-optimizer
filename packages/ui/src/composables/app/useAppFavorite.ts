@@ -155,7 +155,7 @@ export interface AppFavoriteOptions {
     optimizerCurrentVersions?: Ref<PromptRecordChain['versions']>
     getFavoriteImageStorageService?: () => IImageStorageService | null
     getFavoriteManager?: () => IFavoriteManager | null
-    getCurrentFunctionMode?: () => 'basic' | 'pro' | 'context' | 'image' | 'arena'
+    getCurrentFunctionMode?: () => 'basic' | 'pro' | 'context' | 'image' | 'video' | 'arena'
     getCurrentOptimizationMode?: () => OptimizationMode
     getCurrentImageSubMode?: () => 'text2image' | 'image2image' | 'multiimage'
 }
@@ -342,11 +342,12 @@ export function useAppFavorite(options: AppFavoriteOptions): AppFavoriteReturn {
      * 处理保存收藏请求
      */
     const getSessionForCurrentMode = (
-        functionMode: 'basic' | 'pro' | 'context' | 'image' | 'arena',
+        functionMode: 'basic' | 'pro' | 'context' | 'image' | 'video' | 'arena',
         optimizationMode: OptimizationMode,
         imageSubMode?: 'text2image' | 'image2image' | 'multiimage',
     ): TemporaryVariablesSessionApi | null => {
-        if (functionMode === 'arena') return null
+        // video 收藏在 Phase 2 才支持，先当作“没有可绑定会话”
+        if (functionMode === 'arena' || functionMode === 'video') return null
         if (functionMode === 'pro' || functionMode === 'context') {
             return optimizationMode === 'system' ? proMultiMessageSession || null : proVariableSession || null
         }
@@ -361,11 +362,11 @@ export function useAppFavorite(options: AppFavoriteOptions): AppFavoriteReturn {
     }
 
     const getAssetBindingSessionForMode = (
-        functionMode: 'basic' | 'pro' | 'context' | 'image' | 'arena',
+        functionMode: 'basic' | 'pro' | 'context' | 'image' | 'video' | 'arena',
         optimizationMode: OptimizationMode,
         imageSubMode?: 'text2image' | 'image2image' | 'multiimage',
     ): AssetBindingSessionApi | null => {
-        if (functionMode === 'arena') return null
+        if (functionMode === 'arena' || functionMode === 'video') return null
         if (functionMode === 'basic') {
             return optimizationMode === 'system'
                 ? basicSystemSession || null

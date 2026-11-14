@@ -102,7 +102,7 @@ describe('full backup integrity with real services', () => {
       for (const mode of LEGACY_SESSION_SUB_MODE_KEYS) {
         const snapshot = mode === 'arena' ? { ...createArenaState(), prompt: 'Arena draft', images: [{ id: 'session-input', _type: 'image-ref' }] } : {
           ...(mode === 'pro-multi' ? { conversationMessagesSnapshot: messages, selectedMessageId: 'context-message', messageChainMap: { 'context-message': 'audit-chain' } }
-            : mode.startsWith('image-') ? { originalPrompt: `original ${mode}` } : { prompt: `draft ${mode}`, testContent: 'test input' }),
+            : mode.startsWith('image-') || mode === 'video-create' ? { originalPrompt: `original ${mode}` } : { prompt: `draft ${mode}`, testContent: 'test input' }),
           optimizedPrompt: `optimized ${mode}\nlast line`, reasoning: 'reasoning', chainId: 'audit-chain', versionId: 'audit-record',
           temporaryVariables: { localSubject: `local ${mode}` },
           selectedOptimizeModelKey: 'audit-text', selectedTestModelKey: 'audit-text', selectedTextModelKey: 'audit-text', selectedImageModelKey: 'audit-image',
