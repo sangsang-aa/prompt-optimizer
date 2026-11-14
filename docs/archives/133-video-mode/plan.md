@@ -13,8 +13,9 @@
 
 ## Phase 0 检查项
 
-- [ ] Node 版本对齐（仓库要求 `^24.22.1`，当前 `v24.19.0`，`engine-strict=true` 会直接拒绝 pnpm 命令）
-- [ ] `pnpm typecheck:core` / `typecheck:ui` 基线为绿
+- [x] Node 版本对齐（`E:\tools\node-v24.22.3-win-x64`，`pnpm@10.6.1`）
+- [x] `pnpm typecheck:core` / `typecheck:ui` 基线为绿（UI 需先构建 core）
+- [x] `pnpm check:locale` / `check:no-chinese-runtime` 通过
 - [ ] Seedance API 提交/查询/下载跑通，保存响应样本
 - [ ] 确认能力位：`cameraFixed / frames / seed / negativePrompt / firstLastFrame / audioDefault`
 - [ ] 确认默认时长、比例、分辨率与计费方式
