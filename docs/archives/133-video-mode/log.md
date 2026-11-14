@@ -38,10 +38,22 @@ AuthenticationError: The API key format is incorrect.
 当前 `.env.local` 里是 `<redacted>`，不是方舟 API Key 的格式
 （方舟 Key 是 UUID 形式）。网络与端点都通，纯鉴权问题。
 
+**第二次：key 通过了，模型没开通**
+
+换成真实 key（`ark-...`，46 字符）后返回：
+
+```
+404 ModelNotOpen
+Your account <redacted> has not activated the model doubao-seedance-2-0-fast-260128.
+Please activate the model service in the Ark Console.
+```
+
+结论：**鉴权链路已打通**，卡在账号未开通该模型。需要在方舟控制台
+「开通管理」里开通 `Seedance 2.0 Fast`（开通条件：账户余额 > 200 元，或购买对应资源包/节省计划）。
+
 **下一步**
 
-- 换成方舟控制台「API Key 管理」里生成的真实 Key，写进 `.env.local`：
-  `ARK_API_KEY=<key>`（该文件已 gitignore）。
+- 在控制台开通 `doubao-seedance-2-0-fast-260128`。
 - 重跑：`node scripts/video-phase0-check.mjs --ratio 3:4 --resolution 480p --duration 4 --out <tmp>/first.mp4 --json <tmp>/first.json`
 
 ---
