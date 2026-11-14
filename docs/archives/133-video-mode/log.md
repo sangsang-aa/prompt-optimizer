@@ -4,6 +4,32 @@
 
 ---
 
+## 2026-11-14（Phase 0：API 打通）
+
+**做了什么**
+
+- 换上真实方舟 Key 后重跑 `scripts/video-phase0-check.mjs`：提交 → 轮询 → 下载全部通过。
+- 产物：4.04s / **560×752**（480p + 3:4）/ 24fps / H.264 / **无音轨** / **无水印** / 0.75 MB；
+  提交到成功 **84 秒**，`completion_tokens = 39891`。
+- 把契约、能力位、样本响应写进 [phase-0-api-verification.md](./phase-0-api-verification.md)，
+  原始响应脱敏后存为 `samples/task-succeeded.json`。
+
+**验证到的关键点**
+
+| 项 | 结论 |
+| --- | --- |
+| `duration` | 传 4 得到 4.04s；范围 4–15，只支持整数秒 |
+| `generate_audio` | 默认 true，显式 false 后确实无音轨 |
+| `watermark` | 默认 false，实测片中无水印 |
+| `seed` | 会返回（52296），但 2.0 不接受传入 |
+| 视频 URL | TOS 签名链，`X-Tos-Expires=86400`（24h） |
+
+**下一步**
+
+Phase 0 收口，进入 Phase 1 骨架（`FunctionMode` + 路由 + 会话 + 空壳页面 + i18n）。
+
+---
+
 ## 2026-11-14（Phase 0：API 打通尝试）
 
 **做了什么**

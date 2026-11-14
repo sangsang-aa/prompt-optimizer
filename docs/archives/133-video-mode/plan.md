@@ -6,7 +6,7 @@
 
 | 阶段 | 目标 | 状态 | 交付物 | 验收 |
 | --- | --- | --- | --- | --- |
-| Phase 0 | 供应商与 API 验证；环境可用 | 🔄 进行中 | 一份真实响应 JSON、能力位确认 | 本机能生成 1 条 4s/3:4 视频；Web/桌面可用性结论 |
+| Phase 0 | 供应商与 API 验证；环境可用 | ✅ 完成 | 一份真实响应 JSON、能力位确认 | 本机能生成 1 条 4s/3:4 视频；Web/桌面可用性结论 |
 | Phase 1 | 模式骨架 + 结构化提示词（不接生成） | ⬜ 未开始 | `VideoPromptSpec`、`structured/compact` 编译、路由/会话/历史/收藏/i18n | 能进 `/video/create`，刷新不丢，其它三模式不受影响 |
 | Phase 2 | 接入 Seedance 2.0 Fast 生成 | ⬜ 未开始 | VideoService/Adapter/ModelManager、参数面板、预览/下载/取消 | 提交→排队→生成→成功；失败可读；无大体积写入 |
 | Phase 3 | 能力补齐 | ⬜ 未开始 | 对比、提示词评估、桌面完善 | 能力矩阵 ✅/◐ 项均有验证记录 |
@@ -16,9 +16,9 @@
 - [x] Node 版本对齐（`E:\tools\node-v24.22.3-win-x64`，`pnpm@10.6.1`）
 - [x] `pnpm typecheck:core` / `typecheck:ui` 基线为绿（UI 需先构建 core）
 - [x] `pnpm check:locale` / `check:no-chinese-runtime` 通过
-- [ ] Seedance API 提交/查询/下载跑通，保存响应样本
+- [x] Seedance API 提交/查询/下载跑通，保存响应样本（见 phase-0-api-verification.md）
 - [ ] 确认能力位：`cameraFixed / frames / seed / negativePrompt / firstLastFrame / audioDefault`
-- [ ] 确认默认时长、比例、分辨率与计费方式
+- [x] 确认默认时长（4s 起）、比例（3:4 实测）、分辨率（480p=560×752）、按 completion_tokens 计费
 - [ ] Web 端 CORS 结论（不通则走桌面主进程代理）
 
 ## Phase 1 交付顺序（最小垂直切片）

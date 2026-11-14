@@ -1,0 +1,25 @@
+{
+  "id": "cgt-20261114132405-xt851",
+  "model": "doubao-seedance-2-0-fast-260128",
+  "status": "succeeded",
+  "content": {
+    "video_url": "<SIGNED_VIDEO_URL>"
+  },
+  "usage": {
+    "completion_tokens": 39891,
+    "total_tokens": 39891
+  },
+  "created_at": 1794633850,
+  "updated_at": 1794633933,
+  "seed": 52296,
+  "resolution": "480p",
+  "ratio": "3:4",
+  "duration": 4,
+  "framespersecond": 24,
+  "service_tier": "default",
+  "execution_expires_after": 172800,
+  "generate_audio": false,
+  "draft": false,
+  "priority": 0,
+  "output_format": "mp4"
+}
