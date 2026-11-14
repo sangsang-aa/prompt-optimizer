@@ -34,6 +34,7 @@
 - 104-test-panel-refactor - 测试面板重构 📋
 - 105-output-display-v2 - 输出显示v2 📋
 - 106-template-management - 模板管理功能 🔄
+- 133-video-mode - 视频模式（进行中）🔄
 
 ### 🛠️ [开发工作区](./workspace/)
 当前开发阶段的临时文档和开发笔记

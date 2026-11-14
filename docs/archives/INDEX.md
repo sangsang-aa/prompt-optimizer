@@ -35,6 +35,10 @@
 ## 🚀 功能开发系列
 
 ### 核心功能模块
+- **[133-video-mode](./133-video-mode/)** - 视频模式（Video Mode）🔄
+  - 一级模式：视频要求 + 参考图 → 结构化提示词 → 视频生成预览
+  - 过程记录：计划、决策、进展、验收；设计正文见 `docs/architecture/video-mode-design.md`
+
 - **[106-template-management](./106-template-management/)** - 模板管理功能
   - 模板的增删改查功能
   - 异步操作优化
