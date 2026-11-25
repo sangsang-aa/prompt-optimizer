@@ -151,7 +151,7 @@ Phase 0 收口，进入 Phase 1 骨架（`FunctionMode` + 路由 + 会话 + 空�
 AuthenticationError: The API key format is incorrect.
 ```
 
-当前 `.env.local` 里是 `<redacted>`，不是方舟 API Key 的格式
+当前 `.env.local` 里放的是一个格式不符的占位串，不是方舟 API Key 的格式
 （方舟 Key 是 UUID 形式）。网络与端点都通，纯鉴权问题。
 
 **第二次：key 通过了，模型没开通**
