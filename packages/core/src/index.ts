@@ -156,6 +156,9 @@ export * from './services/prompt/errors'
 // 导出标准提示词领域模型
 export * from './services/prompt-model'
 
+// 导出视频提示词规格（schema 与容错解析）
+export * from './services/video/prompt-spec'
+
 // 导出对比服务相关
 export { CompareService, createCompareService } from './services/compare/service'
 export type { ICompareService } from './services/compare/types'
