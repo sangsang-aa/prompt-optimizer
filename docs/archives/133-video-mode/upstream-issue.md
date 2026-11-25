@@ -55,8 +55,8 @@ Prompt Optimizer 目前覆盖 Basic / Context / Image，但视频提示词的写
 - 已完成 Phase 0：Seedance API 提交 → 轮询 → 下载实测通过（4s / 3:4 / 480p，84 秒，无音轨、无水印）。
 - 已完成 Phase 1 骨架：模式、路由、导航、会话、空壳工作区、三语 i18n；typecheck 与单测全绿。
 - 已完成 `VideoPromptSpec` schema 与容错解析，以及编译器设计（含能力位降级规则）。
-- 代码在个人仓库：`https://github.com/sangsang-aa/prompt-optimzer`，分支 `feature/video-mode`。
-- 详细设计与实施记录：`docs/architecture/video-mode-design.md`、`docs/archives/133-video-mode/`。
+- 代码在个人仓库（公开）：`https://github.com/sangsang-aa/prompt-optimizer`，分支 `feature/video-mode`。
+- 详细设计与实施记录：[video-mode-design.md](https://github.com/sangsang-aa/prompt-optimizer/blob/feature/video-mode/docs/architecture/video-mode-design.md)、[133-video-mode](https://github.com/sangsang-aa/prompt-optimizer/tree/feature/video-mode/docs/archives/133-video-mode)。
 
 ### 验证方式
 
