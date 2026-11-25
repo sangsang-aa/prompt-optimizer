@@ -7,7 +7,7 @@
 | 阶段 | 目标 | 状态 | 交付物 | 验收 |
 | --- | --- | --- | --- | --- |
 | Phase 0 | 供应商与 API 验证；环境可用 | ✅ 完成 | 一份真实响应 JSON、能力位确认 | 本机能生成 1 条 4s/3:4 视频；Web/桌面可用性结论 |
-| Phase 1 | 模式骨架 + 结构化提示词（不接生成） | ⬜ 未开始 | `VideoPromptSpec`、`structured/compact` 编译、路由/会话/历史/收藏/i18n | 能进 `/video/create`，刷新不丢，其它三模式不受影响 |
+| Phase 1 | 模式骨架 + 结构化提示词（不接生成） | 🟡 进行中 | `VideoPromptSpec`（✅ schema/解析）、`structured/compact` 编译、路由/会话/历史/收藏/i18n | 能进 `/video/create`，刷新不丢，其它三模式不受影响 |
 | Phase 2 | 接入 Seedance 2.0 Fast 生成 | ⬜ 未开始 | VideoService/Adapter/ModelManager、参数面板、预览/下载/取消 | 提交→排队→生成→成功；失败可读；无大体积写入 |
 | Phase 3 | 能力补齐 | ⬜ 未开始 | 对比、提示词评估、桌面完善 | 能力矩阵 ✅/◐ 项均有验证记录 |
 
@@ -17,18 +17,22 @@
 - [x] `pnpm typecheck:core` / `typecheck:ui` 基线为绿（UI 需先构建 core）
 - [x] `pnpm check:locale` / `check:no-chinese-runtime` 通过
 - [x] Seedance API 提交/查询/下载跑通，保存响应样本（见 phase-0-api-verification.md）
-- [ ] 确认能力位：`cameraFixed / frames / seed / negativePrompt / firstLastFrame / audioDefault`
+- [x] 确认能力位：`camera_fixed / frames / seed` 不支持；`first_frame / last_frame / reference_image` 支持；`generate_audio` 默认 true；`watermark` 默认 false
+- [ ] 确认 `negativePrompt` 是否支持独立传入（Phase 2 接适配器时验证）
 - [x] 确认默认时长（4s 起）、比例（3:4 实测）、分辨率（480p=560×752）、按 completion_tokens 计费
 - [ ] Web 端 CORS 结论（不通则走桌面主进程代理）
 
 ## Phase 1 交付顺序（最小垂直切片）
 
-1. `FunctionMode` 加 `video` + 全局设置 + 存储键
-2. 路由 `/video/create` + 守卫 + 启动恢复
-3. 会话键 `session/v1/video-create` + 空壳 store
-4. 空壳 `VideoWorkspace` + i18n 三语
-5. `VideoPromptSpec` + 编译器（core 单测）
-6. 模板、历史、收藏、备份的类型分支
+1. [x] `FunctionMode` 加 `video` + 全局设置 + 存储键
+2. [x] 路由 `/video/create` + 守卫 + 启动恢复
+3. [x] 会话键 `session/v1/video-create` + 空壳 store
+4. [x] 空壳 `VideoWorkspace` + i18n 三语
+5. [ ] `VideoPromptSpec` + 编译器（core 单测）
+   - [x] schema、默认值/归一化、容错解析（`parseVideoPromptSpec`）
+   - [x] 编译器设计确认（`structured` / `compact` / 能力位）
+   - [ ] `structured` / `compact` 编译与能力位适配
+6. [ ] 模板、历史、收藏、备份的类型分支
 
 每步完成后必须跑：
 

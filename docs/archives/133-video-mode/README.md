@@ -13,7 +13,7 @@
 | --- | --- |
 | 开始 | 2026-11-14 |
 | 完成 | — |
-| 状态 | ✅ Phase 0 完成，进入 Phase 1 |
+| 状态 | 🟡 Phase 1 进行中（骨架 ✅ / 规格 schema ✅ / 编译与 UI 待做） |
 | 分支 | `feature/video-mode` |
 
 ## 文档清单
@@ -22,7 +22,9 @@
 - [x] `plan.md` - 阶段计划与当前状态
 - [x] `decisions.md` - 已确认决策与边界
 - [x] `log.md` - 按日期的进展记录
-- [ ] `phase-1-skeleton.md` - Phase 1 骨架实施记录（开工后补）
+- [x] `phase-1-skeleton.md` - Phase 1 骨架实施记录
+- [x] `phase-1-prompt-schema.md` - 视频提示词规格 schema 与容错解析
+- [x] `phase-1-compiler-design.md` - 编译器（structured / compact）设计，已确认待实现
 - [ ] `phase-2-generation.md` - Phase 2 生成链路实施记录
 - [ ] `verification.md` - 自动检查 + 手工验收证据
 - [ ] `experience.md` - 经验总结（完工后写）

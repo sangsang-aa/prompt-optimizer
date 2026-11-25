@@ -4,6 +4,55 @@
 
 ---
 
+## 2026-11-25（编译器设计确认）
+
+**做了什么**
+
+- 确认编译器六项决策：空段省略、固定连接词用英文、比例/分辨率不支持只警告且生成阶段不推送、
+  `compact` 最多 6 条 beats、编译参数不内置默认值、未声明能力位按不支持处理。
+- 写下 [phase-1-compiler-design.md](./phase-1-compiler-design.md)（段落规则、能力位、warning、示例、测试矩阵）。
+- 起草 [upstream-issue.md](./upstream-issue.md)，准备先向上游确认方向，再决定 PR 粒度。
+
+**下一步**
+
+- 实现 `compileVideoPrompt`（templates + compiler + tests）。
+- 向上游提 issue；工程先推到个人 fork。
+
+---
+
+## 2026-11-14（Phase 1：视频提示词规格 schema）
+
+**做了什么**
+
+- 新增 `core/src/services/video/prompt-spec.ts`：`VideoPromptSpec` 六类字段 + 可选 `background`、
+  zod 输入契约、默认值/归一化、`parseVideoPromptSpec` / `normalizeVideoPromptSpec`。
+- 解析链：围栏/平衡对象/原文三种候选 → `JSON.parse` → `jsonrepair` → 单键解包 → 去 null+trim → zod。
+- 失败只返回 code（`empty / too_large / invalid_json / invalid_schema`），错误与警告均无中文文案。
+- 单测 `packages/core/tests/unit/video/prompt-spec.test.ts` 共 12 个用例。
+- 明细见 [phase-1-prompt-schema.md](./phase-1-prompt-schema.md)。
+
+**结论**
+
+- “LLM 输出 JSON → 统一规格”的边界已固定；编译器、会话恢复、UI 面板都可以直接消费。
+- `promptStyle` 不在解析层补默认值，留给编译选项，避免持久化隐式状态。
+- `jsonrepair` 不能无脑用于任意文本（会把散文修成字符串），只对含 `{` 的候选启用。
+
+**验证**
+
+| 检查 | 结果 |
+| --- | --- |
+| `pnpm typecheck:core` | ✅ |
+| `pnpm -F core test tests/unit/video/prompt-spec.test.ts` | ✅ 12 passed |
+| `pnpm -F core test` | ✅ 1500 passed / 152 skipped |
+| `pnpm check:no-chinese-runtime` | ✅ |
+
+**下一步**
+
+- `structured` / `compact` 编译与能力位适配（`compileVideoPrompt`）。
+- 之后才是 UI 接线与模板。
+
+---
+
 ## 2026-11-14（Phase 1：视频模式骨架）
 
 **做了什么**
