@@ -1,7 +1,7 @@
 # 上游 Issue 草稿（视频模式）
 
 > 用途：向 `linshenkx/prompt-optimizer` 提 feature issue，先确认方向是否被接受，再决定 PR 粒度。
-> 状态：草稿。提交前替换 `{{FORK_URL}}` 与 `{{BRANCH}}`。
+> 状态：草稿。仓库与分支已填入，可直接复制到上游 issue。
 
 ## 标题
 
@@ -55,7 +55,7 @@ Prompt Optimizer 目前覆盖 Basic / Context / Image，但视频提示词的写
 - 已完成 Phase 0：Seedance API 提交 → 轮询 → 下载实测通过（4s / 3:4 / 480p，84 秒，无音轨、无水印）。
 - 已完成 Phase 1 骨架：模式、路由、导航、会话、空壳工作区、三语 i18n；typecheck 与单测全绿。
 - 已完成 `VideoPromptSpec` schema 与容错解析，以及编译器设计（含能力位降级规则）。
-- 代码在 fork：`{{FORK_URL}}`，分支 `{{BRANCH}}`。
+- 代码在个人仓库：`https://github.com/sangsang-aa/prompt-optimzer`，分支 `feature/video-mode`。
 - 详细设计与实施记录：`docs/architecture/video-mode-design.md`、`docs/archives/133-video-mode/`。
 
 ### 验证方式
@@ -76,7 +76,7 @@ Prompt Optimizer 目前覆盖 Basic / Context / Image，但视频提示词的写
 
 ## 提交检查清单
 
-- [ ] 替换 `{{FORK_URL}}`、`{{BRANCH}}`
+- [x] 仓库与分支已填入
 - [ ] 附 1 张 `/video/create` 截图（可选）
 - [ ] 确认不包含任何 API Key、`.env.local`、真实响应中的签名 URL
 - [ ] 若维护者倾向小步提交，先只发骨架 PR
